@@ -1,0 +1,25 @@
+<div class="movie_card">
+  <div class="info_section">
+    <div class="movie_header">
+      <img
+        class="locandina"
+        [src]="pelicula.poster_path"
+        alt="{{ pelicula.title }} Poster"
+        title="{{ pelicula.title }}"
+      />
+      <h1>{{ pelicula.title }}</h1>
+      <h4>{{ pelicula.release_date | date : "yyyy" }}, Director Name</h4>
+    </div>
+    <div class="movie_social">
+      <ul>
+        <li><i class="material-icons">share</i></li>
+        <li><i class="material-icons"></i></li>
+        <li><i class="material-icons">chat_bubble</i></li>
+      </ul>
+    </div>
+  </div>
+  <div
+    class="blur_back"
+    [style.background-image]="'url(' + pelicula.backdrop_path + ')'"
+  ></div>
+</div>

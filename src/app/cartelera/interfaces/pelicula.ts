@@ -1,8 +1,17 @@
+export interface consultaGeneros {
+  genres: Genero[];
+}
+
+export interface Genero{
+  id: number;
+  name: string;
+}
+
 export interface consultaPeliculas {
-  pagina: number
-  peliculas: Pelicula[]
-  total_paginas: number
-  total_peliculas: number
+  page: number;
+  results: Pelicula[];
+  total_pages: number;
+  total_results: number;
 }
 
 export interface Pelicula {

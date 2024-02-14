@@ -1,7 +1,6 @@
 <div
   class="carousel"
   [style.width.px]="cellWidth"
-  [style.margin-top.px]="marginTop"
 >
   <div
     #element
@@ -20,13 +19,7 @@
           />
           <h1>{{ pelicula.title }}</h1>
           <h4>{{ pelicula.release_date | date : "yyyy" }}, Director Name</h4>
-          <span class="minutes">Placeholder min</span>
-          <p class="type">{{ getGenres(pelicula.genre_ids) }}</p>
-        </div>
-        <div class="movie_desc">
-          <p class="text">
-            {{ pelicula.overview }}
-          </p>
+          <span class="info" (click)="pulsado(pelicula)">Más Información</span>
         </div>
         <div class="movie_social">
           <ul>

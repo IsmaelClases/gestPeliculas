@@ -1,5 +1,10 @@
-<pseudo-3d-carousel
-  [radius]="350"
-  [top]="100"
-  [peliculas]="peliculas"
-></pseudo-3d-carousel>
+<div *ngFor="let genero of generos.slice(0, 5)" class="generos">
+  <div id="label">{{ genero.name }}</div>
+  <ng-container *ngIf="peliculasPorGenero[genero.id]">
+    <pseudo-3d-carousel
+      [radius]="650"
+      [top]="150"
+      [peliculas]="peliculasPorGenero[genero.id]">
+    </pseudo-3d-carousel>
+  </ng-container>
+</div>

@@ -14,6 +14,9 @@ import {
   AnimationPlayer,
 } from '@angular/animations';
 import { Pelicula } from '../../interfaces/pelicula';
+import { DatosPeliculaComponent } from '../datos-pelicula/datos-pelicula.component';
+import { MatDialog } from '@angular/material/dialog';
+import { Overlay } from '@angular/cdk/overlay';
 
 @Component({
   selector: 'pseudo-3d-carousel',
@@ -47,7 +50,11 @@ export class Pseudo3dCarouselComponent {
   cellWidth!: number;
   marginTop = -(this.top * this.minScale - this.top) / 2;
 
-  constructor(private builder: AnimationBuilder) {}
+  constructor(
+    private builder: AnimationBuilder,
+    private dialog: MatDialog,
+    private overlay: Overlay
+  ) {}
 
   indexToFront(index: number) {
     const pos = this.animates[index];
@@ -122,8 +129,10 @@ export class Pseudo3dCarouselComponent {
     this.animateViews(1, 0);
   }
 
-
-   getGenres(ids :number[]): string {
-    return 'Texto Placeholder'
-   }
+  pulsado(pelicula: Pelicula): void {
+    const dialogRef = this.dialog.open(DatosPeliculaComponent, {
+      data: pelicula,
+      scrollStrategy: this.overlay.scrollStrategies.noop(),
+    });
+  }
 }

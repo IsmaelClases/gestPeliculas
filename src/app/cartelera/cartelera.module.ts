@@ -9,13 +9,15 @@ import { LayoutPageComponent } from './components/layout-page/layout-page.compon
 import { CarteleraComponent } from './components/cartelera/cartelera.component';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { Pseudo3dCarouselComponent } from './components/pseudo-3d-carousel/pseudo-3d-carousel.component';
+import { DatosPeliculaComponent } from './components/datos-pelicula/datos-pelicula.component';
 
 
 @NgModule({
   declarations: [
     LayoutPageComponent,
     CarteleraComponent,
-    Pseudo3dCarouselComponent
+    Pseudo3dCarouselComponent,
+    DatosPeliculaComponent
   ],
   imports: [
     CommonModule,

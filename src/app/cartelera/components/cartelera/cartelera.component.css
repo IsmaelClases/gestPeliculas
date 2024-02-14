@@ -1,3 +1,24 @@
-app-card-pelicula{
+/* Estilo del carrusel */
+owl-carousel-o {
   display: flex;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+owl-carousel-o .owl-item {
+  float: left;
+  margin-right: 0;
+  cursor: pointer;
+  transform-origin: top left;
+}
+
+owl-carousel-o img {
+  border-radius: 1rem;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.35);
+  height: 15em;
+  object-fit: cover;
+}
+
+owl-carousel-o .owl-item {
+  border-radius: 1rem;
 }

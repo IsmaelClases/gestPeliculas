@@ -7,9 +7,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CarteleraRoutingModule } from './cartelera-routing.module';
 import { LayoutPageComponent } from './components/layout-page/layout-page.component';
 import { CarteleraComponent } from './components/cartelera/cartelera.component';
-import { CardPeliculaComponent } from './components/card-pelicula/card-pelicula.component';
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CarouselModule } from 'ngx-owl-carousel-o';
 import { Pseudo3dCarouselComponent } from './components/pseudo-3d-carousel/pseudo-3d-carousel.component';
 
 
@@ -17,7 +15,6 @@ import { Pseudo3dCarouselComponent } from './components/pseudo-3d-carousel/pseud
   declarations: [
     LayoutPageComponent,
     CarteleraComponent,
-    CardPeliculaComponent,
     Pseudo3dCarouselComponent
   ],
   imports: [
@@ -25,8 +22,7 @@ import { Pseudo3dCarouselComponent } from './components/pseudo-3d-carousel/pseud
     MaterialModule,
     ReactiveFormsModule,
     CarteleraRoutingModule,
-    BrowserModule,
-    BrowserAnimationsModule
-  ]
+    CarouselModule,
+  ],
 })
-export class CarteleraModule { }
+export class CarteleraModule {}

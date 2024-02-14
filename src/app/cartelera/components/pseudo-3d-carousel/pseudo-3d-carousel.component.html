@@ -1,6 +1,42 @@
-<div class="carousel" [style.width.px]="cellWidth" [style.margin-top.px]="marginTop">
-  <div #element *ngFor="let i of array; let index = index" (click)="indexToFront(index)">
-    <img (load)="index == 0 && getDimensions(element)" [src]="images[index]" />
-
+<div
+  class="carousel"
+  [style.width.px]="cellWidth"
+  [style.margin-top.px]="marginTop"
+>
+  <div
+    #element
+    *ngFor="let pelicula of peliculas; let index = index"
+    (click)="indexToFront(index)"
+  >
+    <div class="movie_card">
+      <div class="info_section">
+        <div class="movie_header">
+          <img
+            class="locandina"
+            (load)="index == 0 && getDimensions(element)"
+            [src]="pelicula.poster_path"
+            alt="{{ pelicula.title }} Poster"
+            title="{{ pelicula.title }}"
+          />
+          <h1>{{ pelicula.title }}</h1>
+          <h4>{{ pelicula.release_date | date : "yyyy" }}, Director Name</h4>
+          <span class="minutes">Placeholder min</span>
+          <p class="type">{{ getGenres(pelicula.genre_ids) }}</p>
+        </div>
+        <div class="movie_desc">
+          <p class="text">
+            {{ pelicula.overview }}
+          </p>
+        </div>
+        <div class="movie_social">
+          <ul>
+            <li><i class="material-icons">share</i></li>
+            <li><i class="material-icons"></i></li>
+            <li><i class="material-icons">chat_bubble</i></li>
+          </ul>
+        </div>
+      </div>
+      <div class="blur_back" [style.background-image]="'url(' + pelicula.backdrop_path + ')'"></div>
+    </div>
   </div>
 </div>

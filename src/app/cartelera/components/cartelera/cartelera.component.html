@@ -1,5 +1,5 @@
-<div class="grid mb-8">
-  <div *ngFor="let p of peliculas" class="col-12 m:col-4 md:col-3 xl:col-2">
-    <app-card-pelicula [pelicula]="p"></app-card-pelicula>
-  </div>
-</div>
+<pseudo-3d-carousel
+  [radius]="350"
+  [top]="100"
+  [peliculas]="peliculas"
+></pseudo-3d-carousel>

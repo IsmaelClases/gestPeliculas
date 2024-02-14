@@ -13,6 +13,7 @@ import {
   AnimationBuilder,
   AnimationPlayer,
 } from '@angular/animations';
+import { Pelicula } from '../../interfaces/pelicula';
 
 @Component({
   selector: 'pseudo-3d-carousel',
@@ -20,75 +21,78 @@ import {
   styleUrls: ['./pseudo-3d-carousel.component.css'],
 })
 export class Pseudo3dCarouselComponent {
-  @ViewChildren('element') itemsView: QueryList<ElementRef>;
-  private player: AnimationPlayer;
-  images: string[];
-  length: number
-  animates: number[];
-  array: number[];
+  @ViewChildren('element') itemsView!: QueryList<ElementRef>;
+  private player!: AnimationPlayer;
+  peliculas!: Pelicula[];
+  length!: number;
+  animates!: number[];
+  array!: number[];
 
-  @Input() radius: number;
+  @Input() radius!: number;
   @Input() timer = 250;
-  @Input() top: number = 80;
-  @Input() minScale: number = 0.5;
-  @Input('images') set _(value: string[]) {
-    this.images = value;
+  @Input() top = 80;
+  @Input() minScale = 0.5;
+  @Input('peliculas') set peliculasInput(value: Pelicula[]) {
+    this.peliculas = value;
     this.length = value.length;
-    this.array = new Array(this.length).fill(0).map((_, x) => x)
-    this.animates = new Array(this.length * 2 - 2).fill(0).map((_, x) => x).filter(x => (x <= this.length / 2 || x > (3 * this.length) / 2 - 2))
-
+    this.array = new Array(this.length).fill(0).map((_x, i) => i);
+    this.animates = new Array(this.length * 2 - 2)
+      .fill(0)
+      .map((_x, i) => i)
+      .filter((i) => i <= this.length / 2 || i > (3 * this.length) / 2 - 2);
   }
 
   @Output() select: EventEmitter<number> = new EventEmitter<number>();
 
-  cellWidth: number;
-  marginTop: number = -(this.top * this.minScale - this.top) / 2;
+  cellWidth!: number;
+  marginTop = -(this.top * this.minScale - this.top) / 2;
 
+  constructor(private builder: AnimationBuilder) {}
 
-  constructor(private builder: AnimationBuilder) { }
-
-  indexToFront(index: any) {
-    const pos = this.animates[index]
-    if (pos != 0) {
-      const steps = pos <= this.length / 2 ? -pos : 2 * this.length - 2 - pos
+  indexToFront(index: number) {
+    const pos = this.animates[index];
+    if (pos !== 0) {
+      const steps = pos <= this.length / 2 ? -pos : 2 * this.length - 2 - pos;
       const factor = steps < 0 ? -1 : 1;
-      this.animateViews(factor, factor * steps)
+      this.animateViews(factor, factor * steps);
     }
     this.select.emit(index);
   }
 
-  animateViews(direction: number, steps: number = 1) {
-    this.animates.forEach((x: number, index: number) => {
+  animateViews(direction: number, steps = 1) {
+    this.animates.forEach((x, index) => {
       const pos = this.getMovement(x, direction, steps, this.length);
       const time = this.timer / pos.length;
-      const animations = pos.map((x) => this.getAnimation(x, this.length, time));
-      const item = this.itemsView.find((_x, i) => i == index);
+      const animations = pos.map((p) =>
+        this.getAnimation(p, this.length, time)
+      );
+      const item = this.itemsView.find((_x, i) => i === index);
 
-      const myAnimation = this.builder.build(animations);
-      this.player = myAnimation.create(item.nativeElement);
-      this.player.onDone(() => {
-        this.animates[index] = pos[pos.length - 1];
-      });
-      this.player.play();
+      if (item) {
+        const myAnimation = this.builder.build(animations);
+        this.player = myAnimation.create(item.nativeElement);
+        this.player.onDone(() => {
+          this.animates[index] = pos[pos.length - 1];
+        });
+        this.player.play();
+      }
     });
   }
 
-
   getMovement(posIni: number, incr: number, steps: number, length: number) {
-    if (steps == 0) return [posIni];
+    if (steps === 0) return [posIni];
     const pos = [];
     let index = posIni;
     let cont = 0;
     while (cont < steps) {
       index += incr / 2;
       index = (index + 2 * length - 2) % (2 * length - 2);
-      if ((index * 2) % 2 == 0) {
+      if ((index * 2) % 2 === 0) {
         pos.push(index);
         if (index <= length / 2 || index > (3 * length) / 2 - 2) cont++;
       } else pos.push(index);
     }
     return pos;
-
   }
 
   getAnimation(pos: number, length: number, timer: number) {
@@ -96,17 +100,12 @@ export class Pseudo3dCarouselComponent {
     const scale =
       (1 + this.minScale) / 2 + ((1 - this.minScale) / 2) * Math.cos(angle);
     const applystyle = {
-      transform:
-        'translate(' +
-        this.radius * Math.sin(angle) +
-        'px,' +
-        (Math.floor(this.top * scale) - this.top) +
-        'px) scale(' +
-        scale +
-        ')',
+      transform: `translate(${this.radius * Math.sin(angle)}px,${
+        Math.floor(this.top * scale) - this.top
+      }px) scale(${scale})`,
       'z-index': Math.floor(100 * scale),
     };
-    return animate(timer + 'ms', style(applystyle));
+    return animate(`${timer}ms`, style(applystyle));
   }
 
   prev() {
@@ -122,4 +121,9 @@ export class Pseudo3dCarouselComponent {
     this.marginTop = -(this.top * this.minScale - this.top);
     this.animateViews(1, 0);
   }
+
+
+   getGenres(ids :number[]): string {
+    return 'Texto Placeholder'
+   }
 }

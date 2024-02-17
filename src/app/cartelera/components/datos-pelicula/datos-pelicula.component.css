@@ -1,0 +1,245 @@
+@keyframes rotate {
+  0% {
+    transform: rotateZ(0deg) scale(1);
+  }
+  25% {
+    transform: rotateZ(90deg) scale(1.2);
+  }
+  50% {
+    transform: rotateZ(180deg) scale(1.5);
+  }
+  75% {
+    transform: rotateZ(270deg) scale(1.2);
+  }
+  100% {
+    transform: rotateZ(360deg) scale(1);
+  }
+}
+
+.contenedor {
+  box-sizing: border-box;
+  overflow: hidden;
+  position: relative;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  overflow: hidden;
+  padding: 2rem;
+  padding: 5px;
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 5%;
+    height: 125%;
+    z-index: -2;
+    background-color: #377af5;
+    background-repeat: no-repeat;
+    animation: rotate 12s linear infinite;
+    transform-origin: top left;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    left: 6px;
+    top: 6px;
+    width: calc(100% - 12px);
+    height: calc(100% - 12px);
+    background: white;
+    border-radius: 5px;
+  }
+}
+
+
+.blurred {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+#original_header {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  color: white;
+  background-image: linear-gradient(
+    to right,
+    rgba(31.5, 31.5, 31.5, 1) calc((50vw - 170px) - 340px),
+    rgba(31.5, 31.5, 31.5, 0.84) 50%,
+    rgba(31.5, 31.5, 31.5, 0.84) 100%
+  );
+}
+
+.poster_wrapper {
+  border-width: 0;
+  min-width: 300px;
+  width: 300px;
+  height: 450px;
+  overflow: hidden;
+  border-radius: var(--imageBorderRadius);
+  height: 100%;
+}
+
+.poster {
+  display: block;
+  width: 100%;
+  min-width: 100%;
+  height: 100%;
+  min-height: 100%;
+  border-width: 0;
+  outline: 0;
+}
+
+.header_poster_wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  align-content: center;
+  box-sizing: border-box;
+  padding-left: 40px;
+}
+
+.title {
+  width: 100%;
+  margin-bottom: 24px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.h20 {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  font-size: 2.2rem;
+}
+
+.release_date {
+  opacity: 0.8;
+  font-weight: 400;
+}
+
+.facts {
+  display: flex;
+  align-items: center;
+  margin-top: 1%;
+}
+
+.certification {
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.6);
+  padding: 4px 8px !important;
+  line-height: 1;
+  border-radius: 2px;
+  margin-right: 7px;
+}
+
+.genres {
+  font-size: 18px;
+}
+
+.actions {
+  margin-left: -40px;
+  margin-bottom: 20px;
+  width: 100%;
+  height: 68px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  list-style-type: none;
+
+  .chart {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    min-width: 20%;
+  }
+  .tooltip {
+    padding: 3px 0;
+    margin: 20px;
+
+    & .chart {
+      background: 0 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-sizing: border-box;
+      height: 68px;
+
+      & .consensus {
+        width: 68px;
+        height: 68px;
+        display: inline-block;
+        transition: transform 0.2s;
+        transform: scale(1);
+
+        & .outer_ring {
+          display: inline-block;
+          width: 68px;
+          height: 68px;
+          border-radius: 50%;
+          padding: 4px;
+          background-color: #3f51b5;
+
+          & .user_score_chart {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+
+            & .percent {
+              width: 100%;
+              height: 100%;
+              z-index: 2;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            }
+          }
+        }
+      }
+    }
+
+    & .favourite {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+
+      box-sizing: border-box;
+      background: rgba(63, 81, 181, 1);
+      border-radius: 50%;
+      width: 46px;
+      height: 46px;
+      cursor: pointer;
+
+      & .no_click > .material-icons {
+        color: white;
+      }
+    }
+    & .favourite:hover {
+      transform: scale(1.1);
+      transition: all 1s;
+    }
+  }
+}
+
+.header_info {
+  width: 100%;
+
+  & h3 {
+    font-weight: 600;
+    font-size: 1.3em;
+    margin: 0 0 8px;
+  }
+}
+
+.overview {
+  font-size: 16px;
+}

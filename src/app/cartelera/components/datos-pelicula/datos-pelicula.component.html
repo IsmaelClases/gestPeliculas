@@ -1,25 +1,92 @@
-<div class="movie_card">
-  <div class="info_section">
-    <div class="movie_header">
-      <img
-        class="locandina"
-        [src]="pelicula.poster_path"
-        alt="{{ pelicula.title }} Poster"
-        title="{{ pelicula.title }}"
-      />
-      <h1>{{ pelicula.title }}</h1>
-      <h4>{{ pelicula.release_date | date : "yyyy" }}, Director Name</h4>
-    </div>
-    <div class="movie_social">
-      <ul>
-        <li><i class="material-icons">share</i></li>
-        <li><i class="material-icons"></i></li>
-        <li><i class="material-icons">chat_bubble</i></li>
-      </ul>
-    </div>
-  </div>
+<div class="contenedor">
   <div
-    class="blur_back"
-    [style.background-image]="'url(' + pelicula.backdrop_path + ')'"
-  ></div>
+    class="single_column blurred"
+    [style.background-image]="
+      'url(https://image.tmdb.org/t/p/w500' +
+      peliculaDetalles?.backdrop_path +
+      ')'
+    "
+  >
+    <section id="original_header" class="images inner">
+      <div class="poster_wrapper">
+        <img
+          class="poster"
+          title="poster"
+          [src]="
+            'https://image.tmdb.org/t/p/w500' + peliculaDetalles?.poster_path
+          "
+          [alt]="peliculaDetalles?.title"
+        />
+      </div>
+
+      <div class="header_poster_wrapper">
+        <section class="header poster">
+          <div class="title" dir="auto">
+            <h2 class="h20">
+              <span>{{ peliculaDetalles?.title }}</span>
+              <span class="tag release_date"
+                >({{ peliculaDetalles?.release_date | date : "yyyy" }})</span
+              >
+            </h2>
+            <div class="facts">
+              <span class="certification"> 16</span>
+              <span class="genres">
+                <ng-container
+                  *ngFor="
+                    let genre of peliculaDetalles?.genres;
+                    let last = last
+                  "
+                >
+                  <span>{{ genre.name }}</span>
+                  <ng-container *ngIf="!last; else lastBlock"
+                    >,&nbsp;</ng-container
+                  >
+                  <ng-template #lastBlock>.</ng-template>
+                </ng-container>
+              </span>
+              <span class="runtime">{{ peliculaDetalles?.runtime }}</span>
+            </div>
+          </div>
+
+          <ul class="auto actions">
+            <li class="chart">
+              <div class="consensus details">
+                <circle-progress
+                  [percent]="valoracion"
+                  [animation]="false"
+                ></circle-progress>
+              </div>
+              <div class="text">Puntuación<br />de usuarios</div>
+            </li>
+            <li class="tooltip use_tooltip" data-role="tooltip">
+              <span class="favourite" *ngIf="peliculaDetalles && peliculaDetalles.favorita">
+                <i
+                  class="material-icons"
+                  (click)="deleteFavorito(peliculaDetalles)"
+                  >favorite</i
+                >
+              </span>
+              <span
+                class="favourite"
+                *ngIf="peliculaDetalles && !peliculaDetalles.favorita"
+              >
+                <i
+                  class="material-icons"
+                  (click)="setFavorito(peliculaDetalles)"
+                  >favorite_border</i
+                >
+              </span>
+            </li>
+          </ul>
+
+          <div class="header_info">
+            <h3 dir="auto">Vista general</h3>
+            <div class="overview" dir="auto">
+              <p>{{ peliculaDetalles?.overview }}</p>
+            </div>
+          </div>
+        </section>
+      </div>
+    </section>
+  </div>
 </div>

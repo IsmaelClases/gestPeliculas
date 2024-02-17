@@ -1,20 +1,18 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { Routes, RouterModule } from '@angular/router';
 import { LayoutPageComponent } from '../shared/pages/layout-page/layout-page.component';
-import { CarteleraComponent } from './components/cartelera/cartelera.component';
+import { UsuariosComponent } from './usuarios.component';
 
 const routes: Routes = [
   {
     path: '',
     component: LayoutPageComponent,
-    children: [
-      { path: '', component: CarteleraComponent },
-    ]
-  }
+    children: [{ path: '', component: UsuariosComponent }],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class CarteleraRoutingModule { }
+export class UsuariosRoutingModule { }

@@ -8,6 +8,9 @@ html, body {
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+  background-color: black;
+}
 
-  background-color: lightblue;
+.backdropBackground {
+  backdrop-filter: blur(8px);
 }

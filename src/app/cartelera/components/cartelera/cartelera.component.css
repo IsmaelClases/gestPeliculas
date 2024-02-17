@@ -5,8 +5,9 @@
   position: relative;
   border: 4px solid white;
   border-radius: 8px;
+  height: 30em;
 
-  & #label {
+  #label {
     text-align: center;
     color: white;
     font-weight: bold;
@@ -18,6 +19,33 @@
     background-color: black;
     border: 2px solid #3f51b5;
     padding: 5px;
+  }
+
+  #buscador {
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    font-size: 24px;
+    position: absolute;
+    top: -8%;
+    left: 20px;
+    width: 30%;
+    background-color: black;
+    border: 2px solid #3f51b5;
+    padding: 5px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    input[type="text"] {
+      width: 75%;
+      padding: 10px;
+      font-size: 16px;
+      border: none;
+      background-color: transparent;
+      color: white;
+      outline: none;
+    }
   }
 }
 /* Estilo del carrusel */

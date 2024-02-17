@@ -51,27 +51,15 @@
           padding: 25px;
           height: 50%;
 
-          h1 {
+          h2 {
             color: #fff;
             font-weight: 400;
+            margin-top: -1%;
           }
 
           h4 {
             color: #9ac7fa;
             font-weight: 400;
-          }
-
-          .info {
-            display: inline-block;
-            color: #fff;
-            padding: 5px;
-            border-radius: 5px;
-            border: 1px solid rgba(255, 255, 255, 0.13);
-
-            &:hover {
-              transform: scale(1.2);
-              transition: all 0.4s;
-            }
           }
 
           .type {
@@ -93,6 +81,19 @@
           height: 10%;
           padding-left: 15px;
           padding-bottom: 20px;
+
+          .info {
+            display: inline-block;
+            color: #fff;
+            padding: 5px;
+            border-radius: 5px;
+            border: 1px solid rgba(255, 255, 255, 0.13);
+
+            &:hover {
+              transform: scale(1.2);
+              transition: all 0.4s;
+            }
+          }
 
           ul {
             list-style: none;

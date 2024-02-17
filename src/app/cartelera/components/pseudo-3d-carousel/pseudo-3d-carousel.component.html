@@ -1,7 +1,4 @@
-<div
-  class="carousel"
-  [style.width.px]="cellWidth"
->
+<div class="carousel" [style.width.px]="cellWidth">
   <div
     #element
     *ngFor="let pelicula of peliculas; let index = index"
@@ -17,19 +14,30 @@
             alt="{{ pelicula.title }} Poster"
             title="{{ pelicula.title }}"
           />
-          <h1>{{ pelicula.title }}</h1>
-          <h4>{{ pelicula.release_date | date : "yyyy" }}, Director Name</h4>
-          <span class="info" (click)="pulsado(pelicula)">Más Información</span>
+          <h2>{{ pelicula.title }}</h2>
+          <h4>
+            {{ pelicula.release_date | date : "yyyy" }}
+            {{ getListadoGeneros(pelicula.genre_ids) }}
+          </h4>
+          <div class="movie_social">
+            <ul>
+              <li *ngIf="pelicula.favorita" >
+                <i class="material-icons" (click)="deleteFavorito(pelicula)">favorite</i>
+              </li>
+              <li *ngIf="!pelicula.favorita" >
+                <i class="material-icons" (click)="setFavorito(pelicula)">favorite_border</i>
+              </li>
+            </ul>
+          </div>
         </div>
         <div class="movie_social">
-          <ul>
-            <li><i class="material-icons">share</i></li>
-            <li><i class="material-icons"></i></li>
-            <li><i class="material-icons">chat_bubble</i></li>
-          </ul>
+          <span class="info" (click)="detallePelicula(pelicula)">Más Información</span>
         </div>
       </div>
-      <div class="blur_back" [style.background-image]="'url(' + pelicula.backdrop_path + ')'"></div>
+      <div
+        class="blur_back"
+        [style.background-image]="'url(' + pelicula.backdrop_path + ')'"
+      ></div>
     </div>
   </div>
 </div>

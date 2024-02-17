@@ -1,9 +1,45 @@
+<div class="generos" *ngIf="peliculasFavs.length>0" >
+  <div id="label">Favoritas</div>
+  <ng-container>
+    <pseudo-3d-carousel
+      [radius]="650"
+      [top]="150"
+      [generos]="allGeneros"
+      [peliculas]="peliculasFavs">
+    </pseudo-3d-carousel>
+  </ng-container>
+</div>
+
+<div class="generos buscador">
+  <div id="buscador">
+    <label for="busquedaPeliculas">Buscar Películas:</label>
+    <input
+      type="text"
+      id="busquedaPeliculas"
+      [(ngModel)]="terminoBusqueda"
+      placeholder="Ingrese el término de búsqueda"
+      (click)=" terminoBusqueda = '' "
+      (change)="buscarPeliculas()"
+      (blur)="buscarPeliculas()">
+  </div>
+  <!-- Mostrar el carousel solo si hay resultados -->
+  <ng-container *ngIf="carouselActivado">
+    <pseudo-3d-carousel
+      [radius]="650"
+      [top]="150"
+      [generos]="allGeneros"
+      [peliculas]="peliculasBuscadas">
+    </pseudo-3d-carousel>
+  </ng-container>
+</div>
+
 <div *ngFor="let genero of generos.slice(0, 5)" class="generos">
   <div id="label">{{ genero.name }}</div>
   <ng-container *ngIf="peliculasPorGenero[genero.id]">
     <pseudo-3d-carousel
       [radius]="650"
       [top]="150"
+      [generos]="allGeneros"
       [peliculas]="peliculasPorGenero[genero.id]">
     </pseudo-3d-carousel>
   </ng-container>

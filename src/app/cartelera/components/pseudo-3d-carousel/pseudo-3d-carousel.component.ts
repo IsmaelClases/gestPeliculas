@@ -6,6 +6,7 @@ import {
   Input,
   Output,
   EventEmitter,
+  OnInit,
 } from '@angular/core';
 import {
   style,
@@ -13,10 +14,11 @@ import {
   AnimationBuilder,
   AnimationPlayer,
 } from '@angular/animations';
-import { Pelicula } from '../../interfaces/pelicula';
+import { Pelicula, Genero, PeliculaDetalles } from '../../interfaces/pelicula';
 import { DatosPeliculaComponent } from '../datos-pelicula/datos-pelicula.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Overlay } from '@angular/cdk/overlay';
+import { PeliculasService } from '../../services/peliculas.service';
 
 @Component({
   selector: 'pseudo-3d-carousel',
@@ -31,18 +33,26 @@ export class Pseudo3dCarouselComponent {
   animates!: number[];
   array!: number[];
 
+  @Input() generos: Genero[] = [];
   @Input() radius!: number;
   @Input() timer = 250;
   @Input() top = 80;
   @Input() minScale = 0.5;
   @Input('peliculas') set peliculasInput(value: Pelicula[]) {
     this.peliculas = value;
-    this.length = value.length;
-    this.array = new Array(this.length).fill(0).map((_x, i) => i);
-    this.animates = new Array(this.length * 2 - 2)
-      .fill(0)
-      .map((_x, i) => i)
-      .filter((i) => i <= this.length / 2 || i > (3 * this.length) / 2 - 2);
+    this.length = value ? value.length : 0;
+
+    // Verificar si la longitud es válida antes de crear los arrays
+    if (this.length > 0) {
+      this.array = new Array(this.length).fill(0).map((_x, i) => i);
+      this.animates = new Array(this.length * 2 - 2)
+        .fill(0)
+        .map((_x, i) => i)
+        .filter((i) => i <= this.length / 2 || i > (3 * this.length) / 2 - 2);
+    } else {
+      this.array = [];
+      this.animates = [];
+    }
   }
 
   @Output() select: EventEmitter<number> = new EventEmitter<number>();
@@ -53,7 +63,8 @@ export class Pseudo3dCarouselComponent {
   constructor(
     private builder: AnimationBuilder,
     private dialog: MatDialog,
-    private overlay: Overlay
+    private overlay: Overlay,
+    private peliculasService: PeliculasService
   ) {}
 
   indexToFront(index: number) {
@@ -129,10 +140,49 @@ export class Pseudo3dCarouselComponent {
     this.animateViews(1, 0);
   }
 
-  pulsado(pelicula: Pelicula): void {
+  detallePelicula(pelicula: Pelicula): void {
     const dialogRef = this.dialog.open(DatosPeliculaComponent, {
-      data: pelicula,
+      data: pelicula.id,
       scrollStrategy: this.overlay.scrollStrategies.noop(),
+      width: '60%',
+      height: '50%',
+      backdropClass: 'backdropBackground',
     });
+  }
+
+  getGeneroNombre(generoId: number): string {
+    const genero = this.generos.find((g) => g.id === generoId);
+    return genero ? genero.name : 'Desconocido';
+  }
+
+  getListadoGeneros(generoIds: number[]): string {
+    const generosNombres = generoIds.map((generoId) =>
+      this.getGeneroNombre(generoId)
+    );
+    return generosNombres.join(', ');
+  }
+
+  setFavorito(pelicula: Pelicula): void {
+    this.peliculasService.setFavorita(pelicula.id).subscribe(
+      (response) => {
+        console.log('Película marcada como favorita:', response);
+        pelicula.favorita = true;
+      },
+      (error) => {
+        console.error('Error al marcar como favorita:', error);
+      }
+    );
+  }
+
+  deleteFavorito(pelicula: Pelicula): void {
+    this.peliculasService.deleteFavorita(pelicula.id).subscribe(
+      (response) => {
+        console.log('Película eliminada de favoritos:', response);
+        pelicula.favorita = false;
+      },
+      (error) => {
+        console.error('Error al eliminar de favoritos:', error);
+      }
+    );
   }
 }

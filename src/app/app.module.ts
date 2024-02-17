@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { HttpClientModule } from '@angular/common/http';
+import { CarteleraModule } from './cartelera/cartelera.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -15,6 +16,7 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserModule,
     BrowserAnimationsModule,
     CarouselModule,
+    CarteleraModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

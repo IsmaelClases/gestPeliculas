@@ -142,7 +142,7 @@ export class Pseudo3dCarouselComponent {
 
   detallePelicula(pelicula: Pelicula): void {
     const dialogRef = this.dialog.open(DatosPeliculaComponent, {
-      data: pelicula.id,
+      data: pelicula,
       scrollStrategy: this.overlay.scrollStrategies.noop(),
       width: '60%',
       height: '50%',

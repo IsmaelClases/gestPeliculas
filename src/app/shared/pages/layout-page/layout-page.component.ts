@@ -1,27 +1,40 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-layout-page',
   templateUrl: './layout-page.component.html',
   styleUrls: ['./layout-page.component.css'],
 })
-export class LayoutPageComponent {
-  public sidebarItems = [
-    { label: 'Peliculas', icon: 'label', url: '../inicio' },
-    { label: 'Usuarios', icon: 'add', url: '../usuarios' },
-  ];
+export class LayoutPageComponent implements OnInit {
+  public id_rol: string | null = null;
+  public sidebarItems: { label: string; icon: string; url: string }[] = [];
 
-  constructor(
-    //private authService: AuthService,
-    private router: Router
-  ) {}
+  constructor(private router: Router, private authService: AuthService) {}
+
+  ngOnInit() {
+    this.sidebarItems = [
+      { label: 'Peliculas', icon: 'label', url: '../inicio' },
+    ];
+
+    this.id_rol = localStorage.getItem('id_rol');
+
+    if (this.id_rol === '1') {
+      this.sidebarItems.push({
+        label: 'Usuarios',
+        icon: 'supervisor_account',
+        url: '../usuarios',
+      });
+    }
+  }
 
   onLogout() {
-    console.log('Cerrar Sesión');
-    /*
-    this.authService.logOut();
-    this.router.navigate(['/auth']);
-    */
+    this.authService.logout();
+    localStorage.removeItem('id_usuario');
+    localStorage.removeItem('id_rol');
+    localStorage.removeItem('nombre_publico');
+    localStorage.removeItem('token');
+    this.router.navigate(['./']);
   }
 }

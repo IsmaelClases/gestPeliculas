@@ -13,25 +13,25 @@ export class DatosPeliculaComponent implements OnInit {
   valoracion: number = 0;
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public idPelicula: number,
+    @Inject(MAT_DIALOG_DATA) public pelicula: Pelicula,
     public dialogRef: MatDialogRef<DatosPeliculaComponent>,
     private peliculasService: PeliculasService
   ) {}
 
   ngOnInit(): void {
     this.peliculasService
-      .getDetallesPelicula(this.idPelicula)
+      .getDetallesPelicula(this.pelicula.id)
       .subscribe((detalles: PeliculaDetalles) => {
         if (!detalles) {
           this.dialogRef.close();
           return;
         }
         this.peliculaDetalles = detalles;
+        this.peliculaDetalles.favorita = this.pelicula.favorita;
         this.valoracion =
           this.peliculaDetalles?.vote_average !== null
             ? Math.floor(this.peliculaDetalles.vote_average * 10)
             : 50;
-          console.log(this.peliculaDetalles.favorita)
       });
   }
 

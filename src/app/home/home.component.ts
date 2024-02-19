@@ -46,16 +46,10 @@ export class HomeComponent {
       if (RESPONSE) {
         if (RESPONSE.ok) {
           if (RESPONSE.data.token) {
-            console.log(RESPONSE.data);
-            localStorage.setItem('token', RESPONSE.data.token);
-            localStorage.setItem('usuario', RESPONSE.data.usuario);
             localStorage.setItem('id_usuario', RESPONSE.data.id_usuario);
-            localStorage.setItem(
-              'nombre_publico',
-              RESPONSE.data.nombre_publico
-            );
-            localStorage.setItem('ultimaOpcion', RESPONSE.data.opcion);
-            localStorage.setItem('ultimoGrupo', RESPONSE.data.grupo);
+            localStorage.setItem('id_rol', RESPONSE.data.id_rol);
+            localStorage.setItem('nombre_publico',RESPONSE.data.nombre_publico);
+            localStorage.setItem('token', RESPONSE.data.token);
             this.commonService.headers = new HttpHeaders({
               'Content-Type': 'application/json',
               Authorization: `Bearer ${RESPONSE.data.token}`,

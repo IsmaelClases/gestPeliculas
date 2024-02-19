@@ -67,7 +67,6 @@ export class CarteleraComponent implements OnInit {
         this.peliculasFavs.forEach((pelicula) => {
           pelicula.poster_path = `https://image.tmdb.org/t/p/w500${pelicula.poster_path}`;
           pelicula.backdrop_path = `https://image.tmdb.org/t/p/w500${pelicula.backdrop_path}`;
-          pelicula.favorita = true;
         });
       },
       (error) => {

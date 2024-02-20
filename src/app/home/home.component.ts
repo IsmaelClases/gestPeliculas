@@ -15,7 +15,8 @@ export class HomeComponent {
   @Output() valueChange = new EventEmitter();
 
   loginForm!: FormGroup;
-  titulo = 'Acceso CRM RADFPD';
+  visible: number = 0;
+  titulo = 'Acceso Peliculas';
   alerta!: string;
   showSpinner!: boolean;
   error!: string;
@@ -38,9 +39,24 @@ export class HomeComponent {
     });
   }
 
+  siguiente(){
+    if (!this.loginForm.get("username")?.valid ) return
+
+    this.loginForm.get("username")?.disable()
+    this.visible = 1;
+    setTimeout(() => {
+      this.visible = 2
+    }, 3000);
+  }
+
+  anterior(){
+    this.visible = 0;
+    this.loginForm.get("username")?.enable()
+  }
+
   async acceder() {
     if (this.loginForm.valid) {
-      const data = this.loginForm.value;
+      const data = this.loginForm.getRawValue();
       const RESPONSE = await this.authService.doLogin(data).toPromise();
       // console.log(response);
       if (RESPONSE) {

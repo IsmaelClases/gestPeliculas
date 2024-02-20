@@ -8,7 +8,7 @@ import { CookieService } from 'ngx-cookie-service';
 export class CommonService {
   headers: HttpHeaders;
 
-  constructor(private cookieService: CookieService) {
+  constructor(private CookieService: CookieService) {
     this.headers = new HttpHeaders({
       'Content-Type':  'application/json',
       Authorization : `Bearer ${localStorage.getItem('token')}`

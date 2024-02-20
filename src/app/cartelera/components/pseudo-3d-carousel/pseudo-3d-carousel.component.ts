@@ -152,7 +152,7 @@ export class Pseudo3dCarouselComponent {
 
   getGeneroNombre(generoId: number): string {
     const genero = this.generos.find((g) => g.id === generoId);
-    return genero ? genero.name : 'Desconocido';
+    return genero ? genero.name : 'Sin especificar';
   }
 
   getListadoGeneros(generoIds: number[]): string {

@@ -50,6 +50,8 @@ export class CarteleraComponent implements OnInit {
               this.peliculasPorGenero[generoId].forEach((pelicula) => {
                 pelicula.poster_path = `https://image.tmdb.org/t/p/w500${pelicula.poster_path}`;
                 pelicula.backdrop_path = `https://image.tmdb.org/t/p/w500${pelicula.backdrop_path}`;
+                //Comprobar si es favorita
+                this.peliculasService.compruebaFavorita(pelicula.id)  ;
               });
             });
         });

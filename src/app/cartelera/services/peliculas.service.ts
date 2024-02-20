@@ -19,7 +19,7 @@ export class PeliculasService {
   constructor(
     private http: HttpClient,
     private favoritasComunicationService: FavoritasComunicationService,
-  ) {}
+  ) { }
 
   getGeneros(): Observable<consultaGeneros> {
     return this.http.get<consultaGeneros>(
@@ -112,8 +112,19 @@ export class PeliculasService {
   }
 
   compruebaFavorita(id_pelicula: number): boolean {
-//TODO
-    return true
+    console.log("comprobar")
+    const id_usuario = localStorage.getItem('id_usuario');
+    const body = JSON.stringify({
+      id_usuario: id_usuario,
+      id_pelicula: id_pelicula,
+    });
+    this.http.post<any>(`${URL_API_SGI}/peliculas.php?opcion=favs`, body, API_HEADERS).pipe(
+      tap((data) => {
+
+        console.log(data)
+      })
+    );
+return true
   }
 
   setFavorita(id_pelicula: number) {

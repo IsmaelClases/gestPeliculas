@@ -1,14 +1,3 @@
-<div class="generos" *ngIf="peliculasFavs.length>0" >
-  <div id="label">Favoritas</div>
-  <ng-container>
-    <pseudo-3d-carousel
-      [radius]="650"
-      [top]="150"
-      [generos]="allGeneros"
-      [peliculas]="peliculasFavs">
-    </pseudo-3d-carousel>
-  </ng-container>
-</div>
 
 <div class="generos buscador">
   <div id="buscador">
@@ -29,6 +18,18 @@
       [top]="150"
       [generos]="allGeneros"
       [peliculas]="peliculasBuscadas">
+    </pseudo-3d-carousel>
+  </ng-container>
+</div>
+
+<div class="generos" *ngIf="peliculasFavs.length>0" >
+  <div id="label">Favoritas</div>
+  <ng-container>
+    <pseudo-3d-carousel
+      [radius]="650"
+      [top]="150"
+      [generos]="allGeneros"
+      [peliculas]="peliculasFavs">
     </pseudo-3d-carousel>
   </ng-container>
 </div>

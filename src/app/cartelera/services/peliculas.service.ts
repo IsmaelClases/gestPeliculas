@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, catchError, forkJoin, mergeMap, of, tap } from 'rxjs';
+import { Observable, catchError, forkJoin, map, mergeMap, of, tap } from 'rxjs';
 import { FavoritasComunicationService } from './favoritas-comunicacion.service';
 import {
   Pelicula,
@@ -18,8 +18,8 @@ import {
 export class PeliculasService {
   constructor(
     private http: HttpClient,
-    private favoritasComunicationService: FavoritasComunicationService,
-  ) { }
+    private favoritasComunicationService: FavoritasComunicationService
+  ) {}
 
   getGeneros(): Observable<consultaGeneros> {
     return this.http.get<consultaGeneros>(
@@ -111,20 +111,28 @@ export class PeliculasService {
       );
   }
 
-  compruebaFavorita(id_pelicula: number): boolean {
-    console.log("comprobar")
+  compruebaFavorita(id_pelicula: number): Observable<boolean> {
     const id_usuario = localStorage.getItem('id_usuario');
     const body = JSON.stringify({
       id_usuario: id_usuario,
       id_pelicula: id_pelicula,
     });
-    this.http.post<any>(`${URL_API_SGI}/peliculas.php?opcion=favs`, body, API_HEADERS).pipe(
-      tap((data) => {
 
-        console.log(data)
-      })
-    );
-return true
+    return this.http
+      .post<any>(
+        `${URL_API_SGI}/peliculas.php?opcion=favorita`,
+        body,
+        API_HEADERS
+      )
+      .pipe(
+        map((data) => {
+          return data.data[0].favorita == '1';
+        }),
+        catchError((error) => {
+          console.error('Error en la solicitud:', error);
+          return of(false);
+        })
+      );
   }
 
   setFavorita(id_pelicula: number) {
@@ -134,7 +142,8 @@ return true
       id_pelicula: id_pelicula,
     });
     return this.http
-      .post<any>(`${URL_API_SGI}/peliculas.php`, body, API_HEADERS).pipe(
+      .post<any>(`${URL_API_SGI}/peliculas.php`, body, API_HEADERS)
+      .pipe(
         tap(() => {
           this.favoritasComunicationService.updateFavoritasStatus();
         })
@@ -149,6 +158,6 @@ return true
       tap(() => {
         this.favoritasComunicationService.updateFavoritasStatus();
       })
-    );;
+    );
   }
 }

@@ -51,7 +51,9 @@ export class CarteleraComponent implements OnInit {
                 pelicula.poster_path = `https://image.tmdb.org/t/p/w500${pelicula.poster_path}`;
                 pelicula.backdrop_path = `https://image.tmdb.org/t/p/w500${pelicula.backdrop_path}`;
                 //Comprobar si es favorita
-                this.peliculasService.compruebaFavorita(pelicula.id)  ;
+                this.peliculasService.compruebaFavorita(pelicula.id).subscribe((esFavorita) => {
+                    pelicula.favorita = esFavorita;
+                });
               });
             });
         });
@@ -98,6 +100,9 @@ export class CarteleraComponent implements OnInit {
               this.peliculasBuscadas.forEach((pelicula: any) => {
                 pelicula.poster_path = `https://image.tmdb.org/t/p/w500${pelicula.poster_path}`;
                 pelicula.backdrop_path = `https://image.tmdb.org/t/p/w500${pelicula.backdrop_path}`;
+                this.peliculasService.compruebaFavorita(pelicula.id).subscribe((esFavorita) => {
+                    pelicula.favorita = esFavorita;
+                });
               });
             }
 

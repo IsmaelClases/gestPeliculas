@@ -1,5 +1,6 @@
 import {
   ActivatedRouteSnapshot,
+  CanActivate,
   CanActivateFn,
   CanMatchFn,
   Route,
@@ -7,34 +8,24 @@ import {
   RouterStateSnapshot,
   UrlSegment,
 } from '@angular/router';
-import { Observable, map, tap } from 'rxjs';
 import { AuthService } from '../services/auth.service';
-import { inject } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
+import { Observable, map, tap } from 'rxjs';
 
-const checkLoged = (): Observable<boolean> => {
-  const authService: AuthService = inject(AuthService);
-  const router: Router = inject(Router);
+@Injectable({
+  providedIn: 'root',
+})
+export class areLogedMatchGuard implements CanActivate {
+  constructor(public auth: AuthService, public router: Router) {}
 
-  return authService.isAuthenticated().pipe(
-    tap((areLoged) => {
-      if (areLoged) {
-        router.navigate(['/inicio']);
-      }
-    }),
-    map(() => true)
-  );
-};
-
-export const areLogedMatchGuard: CanMatchFn = (
-  router: Route,
-  segment: UrlSegment[]
-) => {
-  return checkLoged();
-};
-
-export const areLogedActivatedGuard: CanActivateFn = (
-  route: ActivatedRouteSnapshot,
-  state: RouterStateSnapshot
-) => {
-  return checkLoged();
-};
+  async canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): Promise<boolean> {
+    const response = await this.auth.areLoged();
+    if (response) {
+      this.router.navigate(['/inicio']);
+    }
+    return true;
+  }
+}

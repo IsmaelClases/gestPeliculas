@@ -1,5 +1,6 @@
 import {
   ActivatedRouteSnapshot,
+  CanActivate,
   CanActivateFn,
   CanMatchFn,
   Route,
@@ -7,33 +8,26 @@ import {
   RouterStateSnapshot,
   UrlSegment,
 } from '@angular/router';
-import { Observable, tap } from 'rxjs';
+import { Observable } from 'rxjs';
 import { AuthService } from '../services/auth.service';
-import { inject } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
+import { tap } from 'rxjs/operators';
 
-const checkAuthStatus = (): Observable<boolean> => {
-  const authService: AuthService = inject(AuthService);
-  const router: Router = inject(Router);
+@Injectable({
+  providedIn: 'root',
+})
+export class AuthGuardService implements CanActivate {
+  constructor(public auth: AuthService, public router: Router) {}
 
-  return authService.isAuthenticated().pipe(
-    tap((isAuthenticated) => {
-      if (!isAuthenticated) {
-        router.navigate(['../']);
-      }
-    })
-  );
-};
+  async canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): Promise<boolean> {
+    const response = await this.auth.isAuthenticated(state.url);
 
-export const canMatchGuard: CanMatchFn = (
-  router: Route,
-  segment: UrlSegment[]
-) => {
-  return checkAuthStatus();
-};
-
-export const canActivatedGuard: CanActivateFn = (
-  route: ActivatedRouteSnapshot,
-  state: RouterStateSnapshot
-) => {
-  return checkAuthStatus();
-};
+    if (!response) {
+      this.router.navigate(['../']);
+    }
+    return true;
+  }
+}

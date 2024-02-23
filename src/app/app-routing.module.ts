@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { Error404Component } from './shared/pages/error404/error404.component';
-import { canMatchGuard } from './shared/guards/auth.guard';
-import { canSeeMatchGuard } from './shared/guards/permises.guard';
+import { AuthGuardService } from './shared/guards/auth.guard';
 import { areLogedMatchGuard } from './shared/guards/loged.guard';
 
 const routes: Routes = [
@@ -16,13 +15,13 @@ const routes: Routes = [
     path: 'inicio',
     loadChildren: () =>
       import('./cartelera/cartelera.module').then((m) => m.CarteleraModule),
-    canActivate: [canMatchGuard],
+    canActivate: [AuthGuardService],
   },
   {
     path: 'usuarios',
     loadChildren: () =>
       import('./usuarios/usuarios.module').then((m) => m.UsuariosModule),
-    canActivate: [canMatchGuard, canSeeMatchGuard],
+    canActivate: [AuthGuardService],
   },
   {
     path: '404',

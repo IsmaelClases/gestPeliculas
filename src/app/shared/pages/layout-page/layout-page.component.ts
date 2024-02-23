@@ -10,7 +10,7 @@ import { AuthService } from '../../services/auth.service';
 export class LayoutPageComponent implements OnInit {
   public id_rol: string | null = null;
   public sidebarItems: { label: string; icon: string; url: string }[] = [];
-
+  public nombre = localStorage.getItem('nombre_publico');
   constructor(private router: Router, private authService: AuthService) {}
 
   ngOnInit() {
